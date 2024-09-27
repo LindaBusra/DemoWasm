@@ -31,6 +31,29 @@
 @code {
     private string newTodo = string.Empty;
     private List<TodoItem> todos = new();
+
+    #region Livssyklus i blazor
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("On initialized");
+        base.OnInitialized();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if(firstRender){
+            Console.WriteLine("First Render!");
+        }
+    }
+
+
+    public void Dispose()
+    {
+        Console.WriteLine("Dispose!");
+    }
+    #endregion
+
+
     private void AddTodo()
     {
         Console.WriteLine("Add Todo Called!..");

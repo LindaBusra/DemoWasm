@@ -1029,3 +1029,4 @@ C:\Users\busra\Desktop\GokstadAkademiet\Software design\DemoWasm\obj\Debug\net8.
 C:\Users\busra\Desktop\GokstadAkademiet\Software design\DemoWasm\obj\Debug\net8.0\refint\DemoWasm.dll
 C:\Users\busra\Desktop\GokstadAkademiet\Software design\DemoWasm\obj\Debug\net8.0\DemoWasm.pdb
 C:\Users\busra\Desktop\GokstadAkademiet\Software design\DemoWasm\obj\Debug\net8.0\ref\DemoWasm.dll
+C:\Users\busra\Desktop\GokstadAkademiet\Software design\DemoWasm\obj\Debug\net8.0\DemoWasm.sourcelink.json
