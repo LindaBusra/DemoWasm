@@ -1,0 +1,18 @@
+
+<input @bind="inputMessage" placeholder="Skriv noe her..."/>
+<button @onclick="NotifyParent" >Klikk meg</button>
+
+@code 
+{
+    [Parameter]
+    public EventCallback<string> OnNotify {get; set;}
+        private string inputMessage;
+        private async Task NotifyParent()
+        {
+            if(!string.IsNullOrEmpty()){
+            await OnNotify.InvokeAsync("Barnet sier Hei");
+            }            
+
+        }
+
+}
