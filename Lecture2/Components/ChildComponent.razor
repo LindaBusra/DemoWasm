@@ -1,18 +1,19 @@
+<input @bind="inputMessage" placeholder="Skriv noe her...."/>
 
-<input @bind="inputMessage" placeholder="Skriv noe her..."/>
-<button @onclick="NotifyParent" >Klikk meg</button>
+<button @onclick="NotifyParent">Send meldingen til parent</button>
 
-@code 
-{
+@code{
     [Parameter]
     public EventCallback<string> OnNotify {get; set;}
-        private string inputMessage;
-        private async Task NotifyParent()
+
+    private string inputMessage;
+
+    private async Task NotifyParent()
+    {
+        if(!string.IsNullOrEmpty(inputMessage))
         {
-            if(!string.IsNullOrEmpty()){
-            await OnNotify.InvokeAsync("Barnet sier Hei");
-            }            
-
+            await OnNotify.InvokeAsync(inputMessage);
         }
-
+        
+    }
 }
