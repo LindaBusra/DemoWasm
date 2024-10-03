@@ -1,0 +1,13 @@
+@page "/dynamic"
+
+<button @onclick="ShowComponentA">Vis komponent A</button>
+<button @onclick="ShowComponentB">Vis komponent B</button>
+
+<DynamicComponent Type="@currentComponent" />
+
+@code {
+    private Type currentComponent = typeof(ComponentA);
+
+    private void ShowComponentA() => currentComponent = typeof(ComponentA);
+    private void ShowComponentB() => currentComponent = typeof(ComponentB);
+}
