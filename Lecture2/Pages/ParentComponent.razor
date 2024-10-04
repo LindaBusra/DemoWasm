@@ -1,0 +1,16 @@
+@page "/parent"
+
+<h3>Interaksjon mellom komponenter</h3>
+<p>@message</p>
+
+<ChildComponent OnNotify="HandleNotification"/>
+
+
+@code {
+    private string message;
+
+    private void HandleNotification(string messageFromChild)
+    {
+        message = messageFromChild;
+    }
+}
