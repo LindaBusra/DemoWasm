@@ -1,0 +1,25 @@
+@page "/products"
+
+<h3>Produktliste!</h3>
+
+<ul>
+    @foreach (var product in products)
+    {
+        <li><a href="/product/@product.Id">@product.Name</a> </li>
+    }
+</ul>
+
+@code {
+
+    private List<Product> products = new List<Product>
+    {
+        new Product {Id = 1, Name ="Produkt 1"},
+        new Product {Id = 2, Name = "Produkt 2"}
+    };
+
+    public class Product
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+    }
+}
