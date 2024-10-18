@@ -1,0 +1,172 @@
+@page "/number-game"
+@using System.Text.RegularExpressions
+@using System.Data
+
+<h3>Number Game</h3>
+
+@if (!gameStarted)
+{
+    <button class="btn btn-primary" @onclick="StartGame">Start Game</button>
+}
+else
+{
+    <h5>Target Number: @targetNumber</h5>
+    <div>
+        <h5>Available Numbers:</h5>
+        @foreach (var number in availableNumbers)
+        {
+            <span class="@("btn btn-secondary m-1 " + (usedNumbers.Contains(number) ? "text-decoration-line-through" : ""))">
+                @number
+            </span>
+        }
+    </div>
+
+    @foreach (var step in userInputs.Keys.OrderBy(k => k))
+    {
+        <div>
+            <h5>Step @step:</h5>
+            <input @bind="userInputs[step]" @onkeydown="@(e => CheckEnter(e, step))" />
+            <button class="btn btn-warning" @onclick="() => DeleteStep(step)">Delete</button>
+        </div>
+    }
+
+    <button class="btn btn-info" @onclick="AddNewStep">Add New Step</button>
+    <button class="btn btn-danger" @onclick="CheckFinalResult">Finish</button>
+    <p>@message</p>
+}
+
+@code {
+    private bool gameStarted = false;
+    private int targetNumber;
+    private List<int> availableNumbers = new List<int>();
+    private HashSet<int> usedNumbers = new HashSet<int>();
+    private SortedDictionary<int, string> userInputs = new SortedDictionary<int, string>();
+    private Dictionary<int, int> stepResults = new Dictionary<int, int>();
+    private string message = "";
+
+    private Random random = new Random();
+
+    private void StartGame()
+    {
+        gameStarted = true;
+        targetNumber = random.Next(401, 1000); // Hedef sayıyı 401 ile 999 arasında belirliyoruz
+        availableNumbers.Clear();
+        usedNumbers.Clear();
+        userInputs.Clear();
+        stepResults.Clear();
+        availableNumbers.AddRange(new List<int> { 25, 50, 75, 100 }.OrderBy(x => random.Next()).Take(2));
+        availableNumbers.AddRange(new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 }.OrderBy(x => random.Next()).Take(5));
+        userInputs[1] = ""; // İlk adımı başlatıyoruz
+        message = "";
+    }
+
+    private void ProcessStep(int step)
+    {
+        try
+        {
+            var result = EvaluateExpression(userInputs[step]);
+            stepResults[step] = result;
+            MarkUsedNumbers(userInputs[step]);
+            message = "Step " + step + " processed successfully.";
+        }
+        catch (Exception ex)
+        {
+            message = "Error processing step: " + ex.Message;
+        }
+    }
+
+    private int EvaluateExpression(string expression)
+    {
+        expression = Regex.Replace(expression, @"\s+", ""); // Boşlukları temizliyoruz
+        var dataTable = new DataTable();
+        var evaluationResult = dataTable.Compute(expression, null);
+
+        if (evaluationResult is DBNull)
+        {
+            throw new Exception("Invalid expression.");
+        }
+
+        return Convert.ToInt32(evaluationResult);
+    }
+
+    private void MarkUsedNumbers(string expression)
+    {
+        // İşlemdeki sayıları belirle ve işaretle
+        var numbersInExpression = Regex.Matches(expression, @"\d+").Cast<Match>().Select(m => int.Parse(m.Value)).ToList();
+        foreach (var number in numbersInExpression)
+        {
+            if (availableNumbers.Contains(number) && !usedNumbers.Contains(number))
+            {
+                usedNumbers.Add(number); // Kullanılan sayıyı işaretle
+            }
+        }
+    }
+
+    private void AddNewStep()
+    {
+        int newStepNumber = userInputs.Keys.Max() + 1;
+        userInputs[newStepNumber] = "";
+    }
+
+    private void DeleteStep(int step)
+    {
+        if (userInputs.ContainsKey(step))
+        {
+            UnmarkUsedNumbers(userInputs[step]); // Kullanılan sayıları geri al
+            userInputs.Remove(step);
+            stepResults.Remove(step);
+        }
+    }
+
+    private void UnmarkUsedNumbers(string expression)
+    {
+        // İşlemdeki sayıları geri işaretle
+        var numbersInExpression = Regex.Matches(expression, @"\d+").Cast<Match>().Select(m => int.Parse(m.Value)).ToList();
+        foreach (var number in numbersInExpression)
+        {
+            usedNumbers.Remove(number);
+        }
+    }
+
+    private void CheckEnter(KeyboardEventArgs e, int step)
+    {
+        if (e.Key == "Enter" && step <= userInputs.Count)
+        {
+            ProcessStep(step);
+            AddNewStep();  // Klavyeden Enter basıldığında yeni adım ekle
+        }
+    }
+
+    private void CheckFinalResult()
+    {
+        if (stepResults.Count == 0 || !stepResults.ContainsKey(userInputs.Keys.Max()))
+        {
+            message = "Please complete the current steps before finishing.";
+            return;
+        }
+
+        var lastResult = stepResults[userInputs.Keys.Max()];
+        int difference = Math.Abs(targetNumber - lastResult);
+
+        if (difference == 0)
+        {
+            message = "Du er geni!";
+        }
+        else if (difference == 1)
+        {
+            message = "Du er flink!";
+        }
+        else if (difference == 2)
+        {
+            message = "Du er god nok!";
+        }
+        else if (difference == 3)
+        {
+            message = "Det kan bli bedre!";
+        }
+        else
+        {
+            message = $"You were {difference} away from the target number.";
+        }
+    }
+}
