@@ -1,0 +1,11 @@
+@page "/cascading"
+
+<CascadingValue Value="SharedValue">
+    <ChildCascadingComponent/>
+</CascadingValue>
+
+@code{
+
+    //Denne verdien deles med child komponenter via CascadingValue
+    private int SharedValue = 10;
+}
