@@ -1,0 +1,26 @@
+
+<h3>Fullførte oppgaver</h3>
+
+<ul>
+    @foreach (var todo in completedTodos)                                   // Viser alle fullførte oppgaver
+    {
+        <li>
+            @todo  <!-- Viser navnet på oppgaven -->
+            <button @onclick="() => Undo(todo)">Angre</button>              <!-- Knap for å angre fullføringen-->
+        </li>
+    }
+</ul>
+
+@code {
+    [Parameter]
+    public List<string> completedTodos { get; set; } = new List<string>();  // Liste over fullførte oppgaver
+
+    // Angre fullføringen (sender tilbake til TodoComponent)
+    private void Undo(string todo)
+    {
+        OnUndo.InvokeAsync(todo);                                           // Kaller OnUndo-eventen for å sende oppgaven tilbake
+    }
+
+    [Parameter]
+    public EventCallback<string> OnUndo { get; set; }                       // Event som brukes for å sende oppgaven tilbake til TodoComponent
+}
