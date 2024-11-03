@@ -1,0 +1,48 @@
+<h3>Todo Liste</h3>
+
+<!-- Input for å legge til ny oppgave -->
+<input @bind="newTodo" placeholder="Legg til ny oppgave..." />
+<button @onclick="AddTodo">Legg til</button>
+
+<ul>
+    @foreach (var todo in todos) // Viser alle oppgaver i Todo-listen
+    {
+        <li>
+            @todo <!-- Viser oppgave teksten -->
+            <button @onclick="() => Complete(todo)">Fullfør</button> <!-- Knap for å fullføre oppgaven -->
+            <button @onclick="() => Remove(todo)">Slett</button> <!-- Knap for å slette oppgaven -->
+        </li>
+    }
+</ul>
+
+@code {
+    [Parameter]
+    public List<string> todos { get; set; } = new List<string>(); // Liste over oppgaver
+
+    private string newTodo; // Holder den nye oppgaven som skal legges til
+
+    // Legger til ny oppgave
+    private void AddTodo()
+    {
+        if (!string.IsNullOrWhiteSpace(newTodo)) // Sjekker om oppgaven ikke er tom
+        {
+            todos.Add(newTodo); // Legger til i Todo-listen
+            newTodo = string.Empty; // Tømmer input-feltet etterpå
+        }
+    }
+
+    // Fjerner oppgave fra Todo-listen
+    private void Remove(string todo)
+    {
+        todos.Remove(todo); // Fjerner oppgaven
+    }
+
+    // Fullfører oppgave og kaller OnComplete-eventen
+    private void Complete(string todo)
+    {
+        OnComplete.InvokeAsync(todo); // Sender oppgaven til CompletedComponent
+    }
+
+    [Parameter]
+    public EventCallback<string> OnComplete { get; set; } // Event for å sende fullførte oppgaver videre
+}
