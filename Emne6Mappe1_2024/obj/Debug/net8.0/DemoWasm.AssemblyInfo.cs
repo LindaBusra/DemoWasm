@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DemoWasm")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1377605d25e58ea45fbe0d03fa6f0fe00d83d70c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5c6ae3aa4359667dfe7e8ba96316adae50b11d48")]
 [assembly: System.Reflection.AssemblyProductAttribute("DemoWasm")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DemoWasm")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
