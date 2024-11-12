@@ -1,0 +1,20 @@
+<input @bind="inputMessage" placeholder="Skriv noe her...."/>
+
+<button @onclick="NotifyParent">Send meldingen til parent</button>
+
+@code{
+    //EventCallback brukes til å sende data fra child til parent
+    [Parameter]
+    public EventCallback<string> OnNotify {get; set;}
+
+    private string inputMessage;
+
+    private async Task NotifyParent()
+    {
+        if(!string.IsNullOrEmpty(inputMessage))
+        {
+            await OnNotify.InvokeAsync(inputMessage);
+        }
+        
+    }
+}
