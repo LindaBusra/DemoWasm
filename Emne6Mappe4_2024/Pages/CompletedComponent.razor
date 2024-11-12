@@ -1,0 +1,25 @@
+<h3 class="text-success text-primary mt-4">Fullførte oppgaver</h3> <!-- Overskrift for seksjonen med fullførte oppgaver -->
+
+<ul class="list-group">
+    @foreach (var todo in completedTodos) // Looper gjennom alle fullførte oppgaver og viser dem
+    {
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span class="completed-task">@todo</span> <!-- Viser navnet på den fullførte oppgaven -->
+            <button class="btn btn-sm btn-warning" @onclick="() => Undo(todo)">Angre</button> <!-- Knapp for å angre fullføringen av en oppgave -->
+        </li>
+    }
+</ul>
+
+@code {
+    [Parameter]
+    public List<string> completedTodos { get; set; } = new List<string>();  // Holder en liste over fullførte oppgaver
+
+    // Metode for å angre fullføringen av en oppgave
+    private void Undo(string todo)
+    {
+        OnUndo.InvokeAsync(todo);  // Utfører en EventCallback for å sende oppgaven tilbake til TodoComponent
+    }
+
+    [Parameter]
+    public EventCallback<string> OnUndo { get; set; }  // Event som brukes til å håndtere "angre" handlingen fra brukeren
+}
