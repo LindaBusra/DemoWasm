@@ -1,0 +1,80 @@
+@page "/dynamic/{section}"
+
+<!-- Knapper for å bytte mellom komponenter -->
+<button @onclick="ShowComponentA">Vis Todo-komponenten</button>  <!-- Knapp for å vise Todo-komponenten -->
+<button @onclick="ShowComponentB">Vis Fullførte-komponenten</button>  <!-- Knapp for å vise Fullførte-komponenten -->
+
+<!-- Dynamisk visning av komponenten -->
+<DynamicComponent Type="@currentComponent" Parameters="@componentParameters" />  <!-- Laster inn valgt komponent dynamisk -->
+
+@code {
+    [Parameter]
+    public string section { get; set; }  // Tar inn parameter for seksjon (todo/fullførte)
+
+    private Type currentComponent;  // Holder gjeldende komponenttype
+
+    private List<string> todos = new List<string>();  // Liste for todo-oppgaver
+    private List<string> completedTodos = new List<string>();  // Liste for fullførte oppgaver
+
+
+    // Enklere metode for å sende parametere til komponenter
+    private Dictionary<string, object> componentParameters => GetComponentParameters();
+
+
+    // Felles metode for å sende parametere basert på komponent
+    private Dictionary<string, object> GetComponentParameters()
+    {
+        if (currentComponent == typeof(TodoComponent))
+        {
+            return new Dictionary<string, object>
+            {
+                { nameof(TodoComponent.OnComplete), EventCallback.Factory.Create<string>(this, AddCompletedTodo) },  // Setter opp OnComplete event for TodoComponent
+                { nameof(TodoComponent.todos), todos }  // Sender todo-listen til TodoComponent
+            };
+        }
+        else if (currentComponent == typeof(CompletedComponent))
+        {
+            return new Dictionary<string, object>
+            {
+                { nameof(CompletedComponent.completedTodos), completedTodos },  // Sender completedTodos til CompletedComponent
+                { nameof(CompletedComponent.OnUndo), EventCallback.Factory.Create<string>(this, UndoCompletedTodo) }  // Setter opp OnUndo event for CompletedComponent
+            };
+        }
+
+        return new Dictionary<string, object>();  // Hvis ingen komponent er valgt
+    }
+    
+
+    // Bestemmer hvilken komponent som skal vises basert på URL-seksjonen
+    protected override void OnParametersSet()    //bruker navigerer en url som matcher dynamic/{section}
+    {
+        if (section == "todo")
+        {
+            ShowComponentA();  // Viser Todo-komponenten
+        }
+        else if (section == "completed")
+        {
+            ShowComponentB();  // Viser Fullførte-komponenten
+        }
+    }
+
+    // Viser Todo-komponenten:endre visningen til TodoComponent
+    private void ShowComponentA() => currentComponent = typeof(TodoComponent);   //Bestemmer hvilken Blazor-komponent som skal vises dynamisk.
+
+    // Viser Completed-komponenten:endrer visningen til CompletedComponent
+    private void ShowComponentB() => currentComponent = typeof(CompletedComponent);
+
+    // Legger fullførte oppgave til completedTodos listen
+    private void AddCompletedTodo(string todo)
+    {
+        completedTodos.Add(todo);
+        todos.Remove(todo);  // Fjerner oppgave fra Todo-listen når den er fullført
+    }
+
+    // Fjerner oppgave fra completedTodos listen og legger tilbake i Todo-listen
+    private void UndoCompletedTodo(string todo)
+    {
+        completedTodos.Remove(todo);
+        todos.Add(todo);  // Legger tilbake oppgave til Todo-listen
+    }
+}
