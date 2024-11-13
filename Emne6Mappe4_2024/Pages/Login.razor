@@ -1,0 +1,53 @@
+@page "/login"
+@using System.ComponentModel.DataAnnotations;
+@inject AuthService AuthService                 // Injiserer AuthService for autentisering
+@inject NavigationManager navigation            // Injiserer NavigationManager for navigering
+
+<h3>Vennligst logg inn for å kunne bruke Todo-applikasjonen</h3><br> 
+
+@if(!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div> <!-- Viser feilmelding hvis det finnes -->
+}
+
+<EditForm Model="userLogin" OnValidSubmit="HandleLogin"> 
+
+    <DataAnnotationsValidator/>                     <!-- Validerer input basert på annotasjoner i UserLogin-klasse -->
+    <ValidationSummary/>                            <!-- Viser en oppsummering av alle valideringsfeil -->
+    <div class="mb-3">
+        <label class="form-label">Username</label>
+        <InputText id="username" class="form-control" @bind-Value="userLogin.Username"/> <!-- Felt for brukernavn -->
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Password</label>
+        <InputText id="password" type="password" class="form-control" @bind-Value="userLogin.Password"/> <!-- Felt for passord -->
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button> <!-- Knapp for å sende innloggingsdata -->
+</EditForm>
+
+@code{
+    private UserLogin userLogin = new UserLogin();      // Oppretter en ny instans av UserLogin for å holde på innloggingsdata
+    private string errorMessage;                        // Variabel for å holde på eventuelle feilmeldinger
+
+    private async Task HandleLogin()
+    {
+        var success = await AuthService.Login(userLogin.Username, userLogin.Password);      // Forsøker å logge inn med brukernavn og passord
+        if(success)
+        {
+            navigation.NavigateTo("/dynamic/todo-app");                                     // Navigerer til Todo-app siden hvis innloggingen er vellykket
+        }
+        else{
+            errorMessage = "Ugyldig brukernavn eller passord. Prøv igjen!";                 // Oppdaterer feilmeldingen hvis innloggingen feiler
+        }
+    }
+
+    private class UserLogin
+    {
+        [Required(ErrorMessage="Brukernavn er påkrevd, vennligst skriv inn!")]  // Validering: Brukernavn er nødvendig
+        [StringLength(20, ErrorMessage="Brukernavn kan ikke overstige 20 tegn")]  // Validering: Brukernavnets lengde begrensning
+        public string Username {get; set;}       // Egenskap for å lagre brukernavnet som brukes ved innlogging
+
+        [Required(ErrorMessage="Passord er påkrevd, du kan dessverre ikke logge inn uten det!")]  // Validering: Passord er nødvendig
+        public string Password {get; set;}       // Egenskap for å lagre passordet som brukes ved innlogging
+    }
+}
