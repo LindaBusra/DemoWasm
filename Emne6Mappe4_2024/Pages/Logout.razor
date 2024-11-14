@@ -1,0 +1,14 @@
+@page "/logout"
+@inject AuthService AuthService  // Injiserer AuthService for å håndtere utlogging
+@inject NavigationManager navigation  // Injiserer NavigationManager for å håndtere ruting
+
+<h3>Logger ut...</h3>  <!-- Viser en melding mens utloggingen behandles -->
+
+@code{
+    // Denne metoden kjøres når komponenten initialiseres
+    protected override async Task OnInitializedAsync()
+    {
+        await AuthService.Logout();         // Logger brukeren ut ved hjelp av AuthService
+        navigation.NavigateTo("/login");    // Navigerer brukeren til innloggingssiden etter utlogging
+    }
+}
