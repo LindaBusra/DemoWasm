@@ -1,0 +1,90 @@
+<h3 class="text-primary mt-4">Todo Liste</h3>
+
+<!-- Input felt for å legge til en ny oppgave -->
+<div class="input-group mb-3">
+    <input @bind="newTodo" placeholder="Legg til ny oppgave..." class="form-control" style="margin-right: 15px;" />
+    <div class="input-group-append">
+        <button class="btn btn-success" @onclick="AddTodo">Legg til</button> <!-- Knapp for å legge til oppgave i listen -->
+    </div>
+</div>
+
+<!-- Liste som viser alle todo oppgaver -->
+<ul class="list-group">
+    @foreach (var todo in todos)
+    {
+        <li class="list-group-item d-flex justify-content-between align-items-center mb-2">
+            @todo <!-- Viser oppgaven -->
+            <span>
+                <button class="btn btn-sm btn-primary mr-2" @onclick="() => Complete(todo)">Fullfør</button> <!-- Knapp for å markere oppgaven som fullført -->
+                <button class="btn btn-sm btn-danger" @onclick="() => ShowDeleteConfirmation(todo)">Slett</button> <!-- Knapp for å vise slettebekreftelsen -->
+            </span>
+        </li>
+    }
+</ul>
+
+<!-- Modal vindu for slettebekreftelse -->
+@if (showConfirmation)
+{
+    <div class="modal fade show d-block" tabindex="-1" style="background-color:rgba(0,0,0,.5)">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Bekreft sletting</h5>
+                    <button type="button" class="btn-close" @onclick="HideDeleteConfirmation"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Er du sikker på at du vil slette oppgaven?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="HideDeleteConfirmation">Avbryt</button>
+                    <button type="button" class="btn btn-danger" @onclick="() => DeleteTodo(todoToDelete)">Slett</button> <!-- Bekrefter og sletter oppgaven -->
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public List<string> todos { get; set; } = new List<string>(); // Liste over oppgaver
+
+    private string newTodo; // Holder den nye oppgaven som skal legges til
+
+    private string? todoToDelete; // Holder oppgaven som skal slettes, midlertidig
+
+    private bool showConfirmation = false; // Viser eller skjuler slettebekreftelses modal
+
+    private void AddTodo()
+    {
+        if (!string.IsNullOrWhiteSpace(newTodo)) // Sjekker om oppgaven ikke er tom
+        {
+            todos.Add(newTodo); // Legger til oppgave i listen
+            newTodo = string.Empty; // Tømmer input-feltet etterpå
+        }
+    }
+
+    private void Complete(string todo)
+    {
+        OnComplete.InvokeAsync(todo); // Sender oppgaven til CompletedComponent
+    }
+
+    private void ShowDeleteConfirmation(string todo)
+    {
+        todoToDelete = todo; // Lagrer oppgaven som skal slettes
+        showConfirmation = true; // Viser slettebekreftelses modal
+    }
+
+    private void HideDeleteConfirmation()
+    {
+        showConfirmation = false; // Skjuler slettebekreftelses modal
+    }
+
+    private void DeleteTodo(string todo)
+    {
+        todos.Remove(todo); // Fjerner oppgaven fra listen
+        showConfirmation = false; // Skjuler modal etter sletting
+    }
+
+    [Parameter]
+    public EventCallback<string> OnComplete { get; set; } // Event for å håndtere fullførte oppgaver
+}
