@@ -1,0 +1,80 @@
+﻿@inject AuthService AuthService                 // Injiserer autentiseringstjenesten
+@inject NavigationManager NavigationManager     // Injiserer navigasjonsbehandleren
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">Emne6Mappe4_2024</a>  
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        @if (isAuthenticated)  // Viser forskjellige menyelementer basert på om brukeren er autentisert
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="dynamic/todo">Todo Liste</NavLink>  <!--  Link til Todo-liste -->
+            </div>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="dynamic/completed">Fullførte oppgaver</NavLink>  <!-- Link til fullførte oppgaver -->
+            </div>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="logout">Logout</NavLink>  <!--  Link til å logge ut -->
+            </div>
+        }
+        else
+        {
+            <div class="nav-item px-3">
+                <a class="nav-link" @onclick="RedirectToLogin">Todo Liste</a>  <!-- Link til Todo-liste som ber brukeren logge inn --> 
+            </div>
+
+            <div class="nav-item px-3">
+                <a class="nav-link" @onclick="RedirectToLogin">Fullførte oppgaver</a>  <!-- Link til fullførte oppgaver som ber brukeren logge inn -->
+            </div>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="login">Login</NavLink>  <!-- Link til innloggingsside -->
+            </div>
+        }
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;  // Holder styr på om navigasjonsmenyen skal være kollapset
+    private bool isAuthenticated;  // Holder styr på brukerens autentiseringstatus
+
+    protected override async Task OnInitializedAsync()
+    {
+        isAuthenticated = await AuthService.IsAuthenticated();  // Sjekker om brukeren er autentisert når komponenten initialiseres
+        AuthService.OnAuthStateChanged += UpdateAuthState;  // Når autentiseringstilstanden endres (for eksempel, når en bruker logger inn eller ut), vil metoden UpdateAuthState bli kalt
+    }
+
+    private void UpdateAuthState()
+    {
+        InvokeAsync(async() => {
+            isAuthenticated = await AuthService.IsAuthenticated();  // Sjekker om brukeren er autentisert når komponenten initialiseres
+            StateHasChanged();  //  oppdaterer brukergrensesnittet når autentiseringstilstanden endres.
+        });
+    }
+
+    private void RedirectToLogin()
+    {
+        NavigationManager.NavigateTo("/login");  // Sender brukeren til innloggingssiden
+    }
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;  // Hjelper med å kontrollere CSS-klassen basert på om menyen er kollapset
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;  // Bytter tilstanden til menyens kollaps
+    }
+
+    public void Dispose()
+    {
+        AuthService.OnAuthStateChanged -= UpdateAuthState;  // Fjerner abonnementet på autentiseringstilstandsoppdateringer
+    }
+}
