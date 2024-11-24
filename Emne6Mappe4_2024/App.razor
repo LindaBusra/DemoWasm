@@ -1,0 +1,22 @@
+﻿<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>Not found</PageTitle>
+        <LayoutView Layout="@typeof(MainLayout)">
+            <div class="welcome-container">
+                <h2>Velkommen til Todo applikasjonen min... 😊</h2>
+                <br>
+                <h6>Den er laget for oppgave Emne6Mappe4 ✨</h6>
+                                <br>
+                <h6>Vennligst loggin fra venstre meny for å fortsette :)</h6>
+
+            </div>
+        </LayoutView>
+    </NotFound>
+</Router>
+
+<RedirectToRoute Route="/dynamic/todo-app" />
+
