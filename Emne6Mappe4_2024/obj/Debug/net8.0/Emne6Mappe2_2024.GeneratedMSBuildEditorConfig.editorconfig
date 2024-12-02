@@ -1,0 +1,71 @@
+is_global = true
+build_property.EnableAotAnalyzer = 
+build_property.EnableSingleFileAnalyzer = 
+build_property.EnableTrimAnalyzer = false
+build_property.IncludeAllContentForSelfExtract = 
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = browser
+build_property.RootNamespace = Emne6Mappe2_2024
+build_property.RootNamespace = Emne6Mappe2_2024
+build_property.ProjectDir = C:\Users\busra\Desktop\GokstadAkademiet\Software design\Emne6Mappe4_2024\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = false
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\busra\Desktop\GokstadAkademiet\Software design\Emne6Mappe4_2024
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/busra/Desktop/GokstadAkademiet/Software design/Emne6Mappe4_2024/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/busra/Desktop/GokstadAkademiet/Software design/Emne6Mappe4_2024/Components/ChildCascadingComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xDaGlsZENhc2NhZGluZ0NvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/busra/Desktop/GokstadAkademiet/Software design/Emne6Mappe4_2024/Components/ChildComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xDaGlsZENvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/busra/Desktop/GokstadAkademiet/Software design/Emne6Mappe4_2024/Pages/CompletedComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcGxldGVkQ29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/busra/Desktop/GokstadAkademiet/Software design/Emne6Mappe4_2024/Pages/DynamicPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRHluYW1pY1BhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/busra/Desktop/GokstadAkademiet/Software design/Emne6Mappe4_2024/Pages/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/busra/Desktop/GokstadAkademiet/Software design/Emne6Mappe4_2024/Pages/Logout.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9nb3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/busra/Desktop/GokstadAkademiet/Software design/Emne6Mappe4_2024/Pages/TodoAppDescription.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVG9kb0FwcERlc2NyaXB0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/busra/Desktop/GokstadAkademiet/Software design/Emne6Mappe4_2024/Pages/TodoComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVG9kb0NvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/busra/Desktop/GokstadAkademiet/Software design/Emne6Mappe4_2024/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/busra/Desktop/GokstadAkademiet/Software design/Emne6Mappe4_2024/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-c2hnvox269
+
+[C:/Users/busra/Desktop/GokstadAkademiet/Software design/Emne6Mappe4_2024/Layout/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-zpkbqfhzqf

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\Emne6Mappe4_2024.props" />
+</Project>

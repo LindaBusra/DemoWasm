@@ -1,0 +1,153 @@
+/* /Layout/MainLayout.razor.rz.scp.css */
+.page[b-c2hnvox269] {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+main[b-c2hnvox269] {
+    flex: 1;
+}
+
+.sidebar[b-c2hnvox269] {
+    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+}
+
+.top-row[b-c2hnvox269] {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d6d5d5;
+    justify-content: flex-end;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+}
+
+    .top-row[b-c2hnvox269]  a, .top-row[b-c2hnvox269]  .btn-link {
+        white-space: nowrap;
+        margin-left: 1.5rem;
+        text-decoration: none;
+    }
+
+    .top-row[b-c2hnvox269]  a:hover, .top-row[b-c2hnvox269]  .btn-link:hover {
+        text-decoration: underline;
+    }
+
+    .top-row[b-c2hnvox269]  a:first-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+@media (max-width: 640.98px) {
+    .top-row[b-c2hnvox269] {
+        justify-content: space-between;
+    }
+
+    .top-row[b-c2hnvox269]  a, .top-row[b-c2hnvox269]  .btn-link {
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 641px) {
+    .page[b-c2hnvox269] {
+        flex-direction: row;
+    }
+
+    .sidebar[b-c2hnvox269] {
+        width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    .top-row[b-c2hnvox269] {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    .top-row.auth[b-c2hnvox269]  a:first-child {
+        flex: 1;
+        text-align: right;
+        width: 0;
+    }
+
+    .top-row[b-c2hnvox269], article[b-c2hnvox269] {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+
+
+    .nav-item[b-c2hnvox269]  a.active {
+        background-color: rgba(255, 255, 255, 0.5); 
+        color: white;
+    }
+    
+    .nav-item[b-c2hnvox269]  a:hover {
+        background-color: rgba(255, 255, 255, 0.25);
+        color: white;
+    }
+    
+
+
+}
+/* /Layout/NavMenu.razor.rz.scp.css */
+
+.nav-item[b-zpkbqfhzqf]  a {
+    color: #ffffff !important;  
+    border-radius: 4px;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    line-height: 3rem;
+}
+
+.nav-item[b-zpkbqfhzqf]  a.active {
+    background-color: rgba(255, 255, 255, 0.37);
+    color: white !important; 
+}
+
+.nav-item[b-zpkbqfhzqf]  a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white !important;  
+}
+
+
+<div class="top-row ps-3 navbar navbar-dark bg-dark"> 
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">Emne6Mappe4_2024</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass nav-scrollable bg-dark" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="dynamic/todo-app">
+                Om Todo-applikasjonen
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="dynamic/todo">
+                Todo Liste
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="dynamic/completed">
+                Fullførte oppgaver
+            </NavLink>
+        </div>
+    </nav>
+</div>
+
+@code[b-zpkbqfhzqf] {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
