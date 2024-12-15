@@ -1,0 +1,29 @@
+file name-->cmd
+in cmd write---> code .   (for open project in visual studio code)
+https://getbootstrap.com/docs/5.3/components/accordion/
+
+https://codepen.io/marcysutton/pen/ZYqjPj
+
+
+https://coolors.co/palettes/trending
+
+https://fakestoreapi.com/
+
+https://www.geeksforgeeks.org/how-to-style-round-buttons-using-css/
+
+
+For autantisering, ellers for å ta vare på token vi skal generere bruker vi en bibliotek som heter: Blazored.LocalStorage. 
+
+1- kjør i terminal: dotnet add package Blazored.LocalStorage  
+
+Vi skal lage en fake server.
+
+2- Vi skal lage en server, og det er under ProductService
+
+--lokal server
+--inspiser-->application-->local storage-->http://localhost:5054  (key-value)
+
+getbootsrap.com  -->Alerts
+
+--Når du er inni apllikasjonen kjør dotnet restart før dotnet run hvis du har noen problem med å få build.
+
